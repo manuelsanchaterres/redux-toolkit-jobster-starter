@@ -1261,7 +1261,7 @@ return (
 
       return (
         <NavLink
-          to={path}
+          to={path} end
           className={({ isActive }) =>
             isActive ? 'nav-link active' : 'nav-link'
           }

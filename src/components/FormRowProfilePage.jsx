@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react"
 import Wrapper from "../assets/wrappers/FormRow"
 
-const FormRow = ({formRow, values, handleChange, refName, isEmptyField}) => {
+const FormRowProfilePage = ({formRowProfilePage, value, handleChange, refName, isEmptyField}) => {
 
-    const {id, name, type, labelText} = formRow
+    const {id, name, type, labelText} = formRowProfilePage
 
     refName = useRef()
 
@@ -41,11 +41,11 @@ const FormRow = ({formRow, values, handleChange, refName, isEmptyField}) => {
         
         ref= {refName}
         
-        type={type} name={name} onChange={(event) => handleChange(event)}  value={values[`${name}`]} className="form-input"/>
+        type={type} name={name} onChange={(event) => handleChange(event)}  value={value} className="form-input"/>
 
       </div>
 
     </Wrapper >
   )
 }
-export default FormRow
+export default FormRowProfilePage
