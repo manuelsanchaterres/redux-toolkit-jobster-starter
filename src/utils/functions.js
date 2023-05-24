@@ -7,14 +7,11 @@ export const checkEmpty = (user, formArray, setIsEmpty) => {
         if (!user[`${name}`]) {
   
           setIsEmpty((prevIsEmpty) => ({ ...prevIsEmpty, [name]: true }));
-  
-          return
-  
+          
+
         } else {
   
           setIsEmpty((prevIsEmpty) => ({ ...prevIsEmpty, [name]: false }));
-  
-  
         }
       })
   

@@ -3,7 +3,7 @@
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import customFetch from "../../utils/axios";
-import { addUsertoLocalStorage, getUserFromLocalStorage, removeUserFromLocalStorage } from "../../utils/localStorage";
+import { addUsertoLocalStorage, getUserFromLocalStorage, removeUserFromLocalStorage } from "../../utils/localStorage/userLocalStorage";
 import { loginUserThunk, registerUserThunk, updateUserThunk } from "./userThunk";
 // import cartItems from '../../cartItems'
 
@@ -60,10 +60,13 @@ const userSlice = createSlice({
             return {...state, isSidebarOpen: !state.isSidebarOpen}
 
         },
-        logoutUser: (state) => {
+        logoutUser: (state,{payload}) => {
 
             removeUserFromLocalStorage()
+            if (payload) {
 
+                toast.success(payload)
+            }
             return {...state, user: null, isLoading: false}
 
         },

@@ -19,7 +19,11 @@ const Navbar = () => {
 
       <div className="nav-center">
 
-        <button className="toggle-btn" type='button' onClick={() => dispatch(toggleSidebar())}><FaAlignLeft/></button>
+        <button className="toggle-btn" type='button' onClick={() => dispatch(toggleSidebar())}>
+
+          <FaAlignLeft/>
+          
+          </button>
 
       </div>
 
@@ -34,11 +38,27 @@ const Navbar = () => {
 
       <div className="btn-container">
 
-        <button className="btn" type='button' onClick={() => setIsToggleLogout(!toggleLogout)}><FaUserCircle/>{user?.name}<FaCaretDown/></button>
+        <button className="btn" type='button' onClick={() => setIsToggleLogout(!toggleLogout)}>
+          
+          <FaUserCircle/>
+          
+          {user?.name}
+          
+          <FaCaretDown/>
+          
+          </button>
 
         <div className={toggleLogout ? "dropdown show-dropdown" : "dropdown"}>
 
-          <button className="dropdown-btn" type='button' onClick={() => dispatch(logoutUser())}><FaUserCircle/>logout<FaCaretDown/></button>
+          <button className="dropdown-btn" type='button' onClick={() => dispatch(logoutUser('Logging out...'))}>
+            
+            <FaUserCircle/>
+            
+            logout
+            
+            <FaCaretDown/>
+            
+            </button>
 
         </div>
 

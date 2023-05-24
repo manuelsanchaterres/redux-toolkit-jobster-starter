@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { FormRow, FormRowProfilePage} from '../../components';
+import { FormRow} from '../../components';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 import { formRowsProfilePage } from '../../utils/constants';
 import { updateUser } from '../../features/user/userSlice';
 import { checkEmpty } from '../../utils/functions';
@@ -38,9 +37,10 @@ const Profile = () => {
 
     e.preventDefault()
 
+    checkEmpty(userData,formRowsProfilePage,setIsEmpty)
+
     dispatch(updateUser(userData))
     
-    checkEmpty(userData,formRowsProfilePage,setIsEmpty)
 
   }
 
@@ -61,11 +61,11 @@ const Profile = () => {
 
           refs.push(name)
 
-          return <FormRowProfilePage
+          return <FormRow
           
           refName={`${refs[index]}Ref`}
 
-          key={formRowProfilePage.id} formRowProfilePage = {formRowProfilePage} value={userData[`${name}`]} handleChange={handleChange} isEmptyField={isEmpty[`${name}`]}/>
+          key={formRowProfilePage.id} formRow = {formRowProfilePage} values={userData} handleChange={handleChange} isEmptyField={isEmpty[`${name}`]}/>
 
         })}
 

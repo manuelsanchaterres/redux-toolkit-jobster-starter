@@ -1,7 +1,11 @@
 export { default as BigSidebar } from './BigSidebar.jsx';
 export { default as FormRow } from './FormRow.jsx';
-export { default as FormRowProfilePage } from './FormRowProfilePage.jsx';
+export { default as Job } from './Job.jsx';
+export { default as JobInfo } from './JobInfo.jsx';
+export { default as JobsContainer } from './JobsContainer.jsx';
+export { default as Loading } from './Loading.jsx';
 export { default as Logo } from './Logo.jsx';
 export { default as Navbar } from './Navbar.jsx';
 export { default as NavLinks } from './NavLinks.jsx';
+export { default as SearchContainer } from './SearchContainer.jsx';
 export { default as SmallSidebar } from './SmallSidebar.jsx';

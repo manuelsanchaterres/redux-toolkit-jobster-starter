@@ -2334,18 +2334,20 @@ const date = createdAt
 </div>
 ```
 
-#### 64) Moment.js
+#### 64) Day.js
 
-[moment.js](https://momentjs.com/)
+[day.js](https://day.js.org/)
 
 ```sh
-npm install moment
+npm install dayjs --save
 ```
-
+```js
+import dayjs from "dayjs";
+```
 Job.js
 
 ```js
-const date = moment(createdAt).format('MMM Do, YYYY');
+  const date = dayjs(createdAt).format('MMM D, YYYY');
 ```
 
 #### 65) Toggle Loading in AllJobs
