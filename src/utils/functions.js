@@ -1,18 +1,21 @@
-export const checkEmpty = (user, formArray, setIsEmpty) => {
+export const checkEmpty = (emptity, formArray, setIsEmpty) => {
 
     formArray.map((formArrayItem) => {
 
-        const name = formArrayItem.name
-  
-        if (!user[`${name}`]) {
-  
-          setIsEmpty((prevIsEmpty) => ({ ...prevIsEmpty, [name]: true }));
-          
+      const name = formArrayItem.name
 
-        } else {
-  
-          setIsEmpty((prevIsEmpty) => ({ ...prevIsEmpty, [name]: false }));
-        }
+      if (!emptity[`${name}`]) {
+
+        setIsEmpty((prevIsEmpty) => ({ ...prevIsEmpty, [name]: true }));
+        
+
+      } else {
+        
+        setIsEmpty((prevIsEmpty) => ({ ...prevIsEmpty, [name]: false }));
+
+      }
+
+
       })
   
 

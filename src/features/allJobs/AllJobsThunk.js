@@ -26,8 +26,6 @@ export const getJobsThunk = async (url, thunkAPI) => {
 
         }
 
-        console.log(error.response.data.msg);
-
         return thunkAPI.rejectWithValue(error.response.data.msg)
 
     }

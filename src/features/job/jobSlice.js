@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { createJobThunk, deleteJobThunk } from "./jobThunk";
+import { createJobThunk, deleteJobThunk, editJobThunk } from "./jobThunk";
 import { addJobtoLocalStorage } from "../../utils/localStorage/jobLocalStorage";
 import { getJobsFromLocalStorage } from "../../utils/localStorage/jobsLocalStorage";
 import { getUserFromLocalStorage } from "../../utils/localStorage/userLocalStorage";
@@ -17,7 +17,7 @@ const initialState = {
     status: 'pending',
     isEditing: false,
     editJobId: '',
-    allJobsArray: getJobsFromLocalStorage()
+    allJobsArray: []
 
 }
 
@@ -36,6 +36,17 @@ export const deleteJob = createAsyncThunk('job/deleteJob',
 
 })
 
+export const editJob = createAsyncThunk('job/editJob',
+
+    (jobInfo, thunkAPI) => {
+        
+        const {jobId,jobEdited} = jobInfo
+
+    return editJobThunk(`/jobs/${jobId}`,jobEdited, thunkAPI)
+
+})
+
+
 
 const jobSlice = createSlice({
 
@@ -50,9 +61,21 @@ const jobSlice = createSlice({
 
         },
 
-        clearValues: () => {
+        clearValues: (state) => {
+
+            if (state.isEditing) {
+
+                return {...initialState, jobLocation: getUserFromLocalStorage()?.location, isEditing:true }    
+
+            }
 
             return {...initialState, jobLocation: getUserFromLocalStorage()?.location }    
+
+        },
+
+        toggleEdit: (state, {payload}) => {
+
+            return {...state, isEditing: !state.isEditing, editJobId: payload}
 
         }
 
@@ -72,6 +95,7 @@ const jobSlice = createSlice({
             const {allJobsArray} = state
             const {job} = payload
 
+            console.log(job);
             toast.success(`Job ${job.position} Successfully Added`)
 
             const newAllJobsArray = [...allJobsArray, job]
@@ -100,6 +124,36 @@ const jobSlice = createSlice({
             toast.error(payload)
 
         })
+        .addCase(editJob.pending, (state) =>  {
+
+            return {...state, isLoading: true}
+
+        })
+        .addCase(editJob.fulfilled, (state, {payload}) =>  {
+
+            const {allJobsArray} = state
+            const {updatedJob} = payload
+
+            console.log(allJobsArray);
+
+            toast.success(`Job ${updatedJob.position} Successfully Edited`)
+
+            const newAllJobsArray = [...allJobsArray, updatedJob]
+
+            addJobtoLocalStorage(newAllJobsArray)
+
+            return {...state, isLoading: false, allJobsArray: newAllJobsArray }
+
+
+        })
+        .addCase(editJob.rejected, (state, {payload}) =>  {
+
+            toast.error(payload)
+
+            return {...state, isLoading: false}
+
+
+        })
 
 
     }
@@ -107,5 +161,5 @@ const jobSlice = createSlice({
 
 })
 
-export const {handleChange, clearValues} = jobSlice.actions
+export const {handleChange, clearValues, toggleEdit} = jobSlice.actions
 export default jobSlice.reducer;

@@ -75,3 +75,38 @@ export const deleteJobThunk = async (url,thunkAPI) => {
 
 }
 
+export const editJobThunk = async (url,jobEdited, thunkAPI) => {
+
+
+    try {
+
+        const response = await customFetch.patch(url,jobEdited,
+            
+        {headers: {
+
+            Authorization: `Bearer ${thunkAPI.getState().user.user.token}` 
+
+        }});
+
+        return response.data
+
+    } catch (error) {
+
+
+        if (error.response.status === 401) {
+
+            thunkAPI.dispatch(logoutUser());
+
+            return thunkAPI.rejectWithValue('Unauthorized User! Logging Out...')
+
+        }
+
+        console.log(error.response.data.msg);
+
+        return thunkAPI.rejectWithValue(error.response.data.msg)
+
+    }
+
+}
+
+

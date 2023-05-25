@@ -17,9 +17,9 @@ const JobsContainer = () => {
   },[])
 
 
-  const jobs = getJobsFromLocalStorage()?.jobs || useSelector((store) => store.allJobs.jobs)
+  const jobs = useSelector((store) => store.allJobs.jobs)
   const {isLoading, totalJobs} = useSelector((store) => store.allJobs)
-  console.log(jobs);
+  
   if (isLoading) {
 
     return (

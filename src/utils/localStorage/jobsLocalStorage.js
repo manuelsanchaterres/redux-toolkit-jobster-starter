@@ -2,6 +2,7 @@ export const getJobsFromLocalStorage = () => {
 
     const result = localStorage.getItem('jobs');
     const jobs = JSON.parse(result) || null
+    
     return jobs
 
 }

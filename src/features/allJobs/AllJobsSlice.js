@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { getJobsThunk } from './AllJobsThunk';
-import { addJobstoLocalStorage } from '../../utils/localStorage/jobsLocalStorage';
+import { addJobstoLocalStorage, getJobsFromLocalStorage } from '../../utils/localStorage/jobsLocalStorage';
 
 const initialFiltersState = {
   search: '',
@@ -25,7 +25,7 @@ const initialState = {
 export const getJobs = createAsyncThunk('allJobs/getJobs',
 
     (_,thunkAPI) => {
-    return getJobsThunk('/jobs',thunkAPI)
+    return getJobsThunk('/job',thunkAPI)
 
 })
 
@@ -81,17 +81,17 @@ const AllJobsSlice = createSlice({
 
           const {jobs, totalJobs, numOfPages} = payload
             
-          console.log(jobs);
-          addJobstoLocalStorage(payload)
+          addJobstoLocalStorage(jobs)
 
-          return {...state, jobs, isLoading: false}
+          return {...state, jobs, totalJobs, numOfPages, isLoading: false}
 
 
         })
         .addCase(getJobs.rejected, (state, {payload}) =>  {
 
           toast.error(payload)
-          return {...state, isLoading: false}
+          
+          return {...state, jobs: getJobsFromLocalStorage(), isLoading: false}
 
 
         })

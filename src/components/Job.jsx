@@ -5,15 +5,15 @@ import { useDispatch } from 'react-redux';
 import JobInfo from './JobInfo';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
-import { deleteJob } from '../features/job/jobSlice';
+import { deleteJob, toggleEdit } from '../features/job/jobSlice';
 
 
 const Job = ({_id, position, company, jobLocation, jobType, createdAt, status}) => {
 
   const dispatch = useDispatch()
 
-
   const date = dayjs(createdAt).format('MMM D, YYYY')
+
 
   return (
 
@@ -53,7 +53,9 @@ const Job = ({_id, position, company, jobLocation, jobType, createdAt, status}) 
 
           <div className="actions">
 
-            <Link to='/add-job' className='btn edit-btn' onClick={() => {console.log('edit job')}}>Edit</Link>
+            <Link 
+            to='/add-job' 
+            className='btn edit-btn' onClick={() => dispatch(toggleEdit(_id))}>Edit</Link>
             <button type="button" className='btn delete-btn' onClick={() => {dispatch(deleteJob(_id))}}>delete</button>
 
           </div>

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { FormRow} from '../../components';
+import { FormRow, JobInfo} from '../../components';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { formRowsAddJobPage } from '../../utils/constants';
 import { checkEmpty } from '../../utils/functions';
-import { createJob, handleChange, clearValues } from '../../features/job/jobSlice';
+import { createJob, handleChange, clearValues, editJob} from '../../features/job/jobSlice';
 
 const AddJob = () => {
 
@@ -13,20 +13,6 @@ const AddJob = () => {
 
   const job = useSelector((store) => store.job)
 
-
-  // this effect update default job location add job page value equal to user location
-  
-  useEffect(()=> {
-
-    if (isEditing) {
-
-      dispatch(handleChange({name: "jobLocation", value: userLocation}))
-    }
-  },[])
-
-  
-
-  
   const dispatch = useDispatch()
 
   const [isEmpty, setIsEmpty] = useState({})
@@ -44,6 +30,7 @@ const AddJob = () => {
 
     e.preventDefault()
 
+
     const {position, company, jobLocation, jobType, status} = job
 
     if (!checkEmpty(job,formRowsAddJobPage,setIsEmpty)) {
@@ -52,15 +39,59 @@ const AddJob = () => {
 
     }
 
-    
+  }
+
+  const handleEdit = (e) => {
+
+    e.preventDefault()
+
+    const jobEdited = {position, company, jobLocation, jobType, status}
+
+    const jobId = job.editJobId
+
+    checkEmpty(job, formRowsAddJobPage,setIsEmpty)
+
+    dispatch(editJob({jobId, jobEdited}))
 
   }
+
+
+    // this effect update default job location add job page value equal to user location
+  
+    useEffect(()=> {
+
+      if (isEditing) {
+  
+        const jobToEdit = allJobsArray.find((job) => job._id === editJobId)
+  
+        const jobEntries = Object.entries(jobToEdit)
+
+        // this iteration includes job values on each corresponden form field value
+  
+        jobEntries.map((jobEntry) => {
+  
+          const validValues = ['position', 'company', 'jobLocation', 'status', 'jobType'];
+  
+          if (validValues.includes(jobEntry[0])) {
+  
+  
+            dispatch(handleChange({name : jobEntry[0], value: jobEntry[1]}))
+  
+          }
+  
+        })
+  
+
+      }
+
+    },[isEditing])
+    
 
   return (
 
     <Wrapper>
 
-      <form  className="form" onSubmit={handleSubmit}>
+      <form  className="form" onSubmit={isEditing ? handleEdit : handleSubmit }>
 
 
         <h3>{isEditing ? 'edit job' : 'add job'}</h3>
@@ -85,7 +116,7 @@ const AddJob = () => {
 
             <button className="btn btn-block clear-btn" type='button' onClick={() => dispatch(clearValues())}>clear</button>
 
-            <button className="btn btn-block submit-btn" type='submit' disabled={isLoading}>{isLoading ? "please wait...":"submit"}</button>
+            <button className="btn btn-block submit-btn" type='submit' disabled={isLoading}>{isLoading ? "please wait...":(isEditing ? "confirm edit": "submit")}</button>
 
           </div>
 
