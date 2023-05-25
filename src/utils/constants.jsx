@@ -92,7 +92,7 @@ export const formRowsAddJobPage = [
     id: 5,
     name: 'jobType',
     type: 'select',
-    options: ['full-time', 'part-time', 'remote', 'internship', 'hybrid'],
+    options: ['full-time', 'part-time', 'remote', 'internship'],
     defaultOption: 'full-time',
     labelText: "job type",
   },

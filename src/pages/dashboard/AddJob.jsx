@@ -10,7 +10,7 @@ const AddJob = () => {
 
   const userLocation = useSelector((store) => store.user.user.location)
   const {isLoading, position, company, jobLocation, jobType, status, isEditing, editJobId, allJobsArray} = useSelector((store) => store.job)
-
+  const {jobs} = useSelector((store) => store.allJobs)
   const job = useSelector((store) => store.job)
 
   const dispatch = useDispatch()
@@ -62,7 +62,7 @@ const AddJob = () => {
 
       if (isEditing) {
   
-        const jobToEdit = allJobsArray.find((job) => job._id === editJobId)
+        const jobToEdit = jobs.find((job) => job._id === editJobId)
   
         const jobEntries = Object.entries(jobToEdit)
 

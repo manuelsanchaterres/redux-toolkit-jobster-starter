@@ -134,14 +134,19 @@ const jobSlice = createSlice({
             const {allJobsArray} = state
             const {updatedJob} = payload
 
-            console.log(allJobsArray);
 
             toast.success(`Job ${updatedJob.position} Successfully Edited`)
 
             const newAllJobsArray = [...allJobsArray, updatedJob]
 
+            
             addJobtoLocalStorage(newAllJobsArray)
 
+            setTimeout(()=> {
+
+                window.location.replace("/all-jobs");
+
+            }, 6500)
             return {...state, isLoading: false, allJobsArray: newAllJobsArray }
 
 

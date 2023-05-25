@@ -25,7 +25,7 @@ const initialState = {
 export const getJobs = createAsyncThunk('allJobs/getJobs',
 
     (_,thunkAPI) => {
-    return getJobsThunk('/job',thunkAPI)
+    return getJobsThunk('/jobs',thunkAPI)
 
 })
 
@@ -90,7 +90,7 @@ const AllJobsSlice = createSlice({
         .addCase(getJobs.rejected, (state, {payload}) =>  {
 
           toast.error(payload)
-          
+
           return {...state, jobs: getJobsFromLocalStorage(), isLoading: false}
 
 
