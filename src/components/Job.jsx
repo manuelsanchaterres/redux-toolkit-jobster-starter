@@ -1,11 +1,11 @@
 import { FaLocationArrow, FaCalendarAlt, FaBriefcase} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/Job';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import JobInfo from './JobInfo';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
-import { deleteJob, toggleEdit } from '../features/job/jobSlice';
+import { deleteJob, setEditJob } from '../features/job/jobSlice';
 
 
 const Job = ({_id, position, company, jobLocation, jobType, createdAt, status}) => {
@@ -55,7 +55,19 @@ const Job = ({_id, position, company, jobLocation, jobType, createdAt, status}) 
 
             <Link 
             to='/add-job' 
-            className='btn edit-btn' onClick={() => dispatch(toggleEdit(_id))}>Edit</Link>
+            className='btn edit-btn'   onClick={() => {
+              dispatch(
+                setEditJob({
+                  editJobId: _id,
+                  position,
+                  company,
+                  jobLocation,
+                  jobType,
+                  status,
+                })
+              );
+            }}
+          >Edit</Link>
             <button type="button" className='btn delete-btn' onClick={() => {dispatch(deleteJob(_id))}}>delete</button>
 
           </div>

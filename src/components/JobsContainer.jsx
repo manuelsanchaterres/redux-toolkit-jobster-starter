@@ -5,12 +5,17 @@ import { getJobsFromLocalStorage } from "../utils/localStorage/jobsLocalStorage"
 import Job from "./Job"
 import Wrapper from '../assets/wrappers/JobsContainer';
 import Loading from "./Loading"
+import { setEditJob } from "../features/job/jobSlice"
 
 const JobsContainer = () => {
 
   const dispatch = useDispatch()
+  // const {isEditing} = useSelector((store) => store.job)
+
 
   useEffect(() =>{
+
+    dispatch(setEditJob({isEditing: false}))
 
     dispatch(getJobs())
 
@@ -19,7 +24,7 @@ const JobsContainer = () => {
 
   const jobs = useSelector((store) => store.allJobs.jobs)
   const {isLoading, totalJobs} = useSelector((store) => store.allJobs)
-  
+
   if (isLoading) {
 
     return (

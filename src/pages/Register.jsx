@@ -27,9 +27,7 @@ const Register = () => {
   const [isEmpty, setIsEmpty] = useState({})
   const navigate = useNavigate()
   let {user, isLoading} = useSelector((store) => store.user)
-
   const dispatch = useDispatch()
-
   let refs = []
 
   const handleChange = (event) => {
@@ -49,6 +47,7 @@ const Register = () => {
 
     e.preventDefault()
     
+
     const {name, email, password, isMember} = values
 
     checkEmpty(values,formRows,setIsEmpty)
@@ -74,6 +73,8 @@ const Register = () => {
   
       return
     }
+  
+
 
   }
 
@@ -144,6 +145,7 @@ const Register = () => {
         })}
 
         <button type="submit" className="btn btn-block" disabled={isLoading}> {isLoading ? 'loading...':'submit'}</button>
+        {values.isMember ? <button type="button" className="btn btn-block btn-hipster" disabled={isLoading} onClick={() => dispatch(loginUser({email: 'testUser@test.com', password: 'secret'}))}> {isLoading ? 'loading...':'demo app'}</button> : null}
 
         <p>{values.isMember ? "Not a member yet ?": "Are you already a member?"  } <button type="button" className="member-btn" onClick={toggleMember}>{values.isMember ? "Sign Up": "Sign In" }</button></p>
 

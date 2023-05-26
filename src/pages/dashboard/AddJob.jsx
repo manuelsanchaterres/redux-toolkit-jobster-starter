@@ -8,10 +8,10 @@ import { createJob, handleChange, clearValues, editJob} from '../../features/job
 
 const AddJob = () => {
 
-  const userLocation = useSelector((store) => store.user.user.location)
   const {isLoading, position, company, jobLocation, jobType, status, isEditing, editJobId, allJobsArray} = useSelector((store) => store.job)
   const {jobs} = useSelector((store) => store.allJobs)
   const job = useSelector((store) => store.job)
+  const userLocation = useSelector((store) => store.user.user.location)
 
   const dispatch = useDispatch()
 
@@ -62,25 +62,26 @@ const AddJob = () => {
 
       if (isEditing) {
   
-        const jobToEdit = jobs.find((job) => job._id === editJobId)
+        // const jobToEdit = jobs.find((job) => job._id === editJobId)
   
-        const jobEntries = Object.entries(jobToEdit)
+        // const jobEntries = Object.entries(jobToEdit)
 
-        // this iteration includes job values on each corresponden form field value
+        // // this iteration includes job values on each corresponden form field value
   
-        jobEntries.map((jobEntry) => {
+        // jobEntries.map((jobEntry) => {
   
-          const validValues = ['position', 'company', 'jobLocation', 'status', 'jobType'];
+        //   const validValues = ['position', 'company', 'jobLocation', 'status', 'jobType'];
   
-          if (validValues.includes(jobEntry[0])) {
+        //   if (validValues.includes(jobEntry[0])) {
   
   
-            dispatch(handleChange({name : jobEntry[0], value: jobEntry[1]}))
+        //     dispatch(handleChange({name : jobEntry[0], value: jobEntry[1]}))
   
-          }
+        //   }
   
-        })
+        // })
   
+        dispatch(handleChange({name : "jobLocation", value: userLocation}))
 
       }
 

@@ -74,9 +74,9 @@ const jobSlice = createSlice({
 
         },
 
-        toggleEdit: (state, {payload}) => {
+        setEditJob: (state, {payload}) => {
 
-            return {...state, isEditing: !state.isEditing, editJobId: payload}
+            return {...state, isEditing: !state.isEditing, ...payload}
 
         }
 
@@ -166,5 +166,5 @@ const jobSlice = createSlice({
 
 })
 
-export const {handleChange, clearValues, toggleEdit} = jobSlice.actions
+export const {handleChange, clearValues, setEditJob} = jobSlice.actions
 export default jobSlice.reducer;

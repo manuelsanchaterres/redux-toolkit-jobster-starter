@@ -9,7 +9,6 @@ export const registerUserThunk = async (url,user, thunkAPI) => {
     try {
 
         const response = await customFetch.post(url, user)
-        // console.log(response.data);
         return response.data
 
     } catch (error) {
@@ -45,7 +44,7 @@ export const updateUserThunk = async (url,user, thunkAPI) => {
     try {
 
 
-        const response = await customFetch.patch(url, user, authHeader(thunkAPI))
+        const response = await customFetch.patch(url, user)
 
         return response.data
         
