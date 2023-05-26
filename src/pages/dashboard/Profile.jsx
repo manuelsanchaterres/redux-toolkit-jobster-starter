@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FormRow} from '../../components';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { formRowsProfilePage } from '../../utils/constants';
 import { updateUser } from '../../features/user/userSlice';
 import { checkEmpty } from '../../utils/functions';
+import { setEditJob } from '../../features/job/jobSlice';
 
 const Profile = () => {
 
@@ -20,6 +21,14 @@ const Profile = () => {
   })
 
   const dispatch = useDispatch()
+
+  // useEffect to restore jobSlice isEditing value to false every time the page mounts
+  
+  useEffect(() =>{
+
+    dispatch(setEditJob({isEditing: false}))
+
+  },[])
 
   const [isEmpty, setIsEmpty] = useState({})
 

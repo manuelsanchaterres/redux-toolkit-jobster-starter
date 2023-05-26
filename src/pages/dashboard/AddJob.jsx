@@ -4,7 +4,7 @@ import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { formRowsAddJobPage } from '../../utils/constants';
 import { checkEmpty } from '../../utils/functions';
-import { createJob, handleChange, clearValues, editJob} from '../../features/job/jobSlice';
+import { createJob, handleChange, clearValues, setEditJob, editJob} from '../../features/job/jobSlice';
 
 const AddJob = () => {
 
@@ -61,26 +61,7 @@ const AddJob = () => {
     useEffect(()=> {
 
       if (isEditing) {
-  
-        // const jobToEdit = jobs.find((job) => job._id === editJobId)
-  
-        // const jobEntries = Object.entries(jobToEdit)
-
-        // // this iteration includes job values on each corresponden form field value
-  
-        // jobEntries.map((jobEntry) => {
-  
-        //   const validValues = ['position', 'company', 'jobLocation', 'status', 'jobType'];
-  
-        //   if (validValues.includes(jobEntry[0])) {
-  
-  
-        //     dispatch(handleChange({name : jobEntry[0], value: jobEntry[1]}))
-  
-        //   }
-  
-        // })
-  
+    
         dispatch(handleChange({name : "jobLocation", value: userLocation}))
 
       }
