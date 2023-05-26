@@ -1,3 +1,4 @@
+
 export const checkEmpty = (emptity, formArray, setIsEmpty) => {
 
     formArray.map((formArrayItem) => {
@@ -18,5 +19,27 @@ export const checkEmpty = (emptity, formArray, setIsEmpty) => {
 
       })
   
+
+}
+
+export const authHeader = (thunkAPI) => {
+
+  return ({
+    
+    headers: {
+
+      Authorization: `Bearer ${thunkAPI.getState().user.user.token}` 
+
+    }
+
+  })
+
+  
+
+}
+
+export const redirectUser = (redirectUri) => {
+
+  window.location.replace(redirectUri)
 
 }

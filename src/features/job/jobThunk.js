@@ -1,4 +1,5 @@
 import customFetch from '../../utils/axios';
+import { authHeader } from '../../utils/functions';
 import { hideLoading, showLoading, getJobs } from '../allJobs/AllJobsSlice';
 import { logoutUser} from '../user/userSlice';
 import { clearValues } from './jobSlice';
@@ -7,14 +8,8 @@ export const createJobThunk = async (url,job, thunkAPI) => {
 
     try {
 
-        const response = await customFetch.post(url, job, 
-            
-        {headers: {
-
-            Authorization: `Bearer ${thunkAPI.getState().user.user.token}` 
-
-        }})
-
+        const response = await customFetch.post(url, job)
+        
         thunkAPI.dispatch(clearValues())
 
         return response.data
@@ -43,13 +38,7 @@ export const deleteJobThunk = async (url,thunkAPI) => {
 
     try {
 
-        const response = await customFetch.delete(url,
-            
-            {headers: {
-
-                Authorization: `Bearer ${thunkAPI.getState().user.user.token}` 
-    
-            }});
+        const response = await customFetch.delete(url);
 
         thunkAPI.dispatch(getJobs())
 
@@ -80,13 +69,7 @@ export const editJobThunk = async (url,jobEdited, thunkAPI) => {
 
     try {
 
-        const response = await customFetch.patch(url,jobEdited,
-            
-        {headers: {
-
-            Authorization: `Bearer ${thunkAPI.getState().user.user.token}` 
-
-        }});
+        const response = await customFetch.patch(url,jobEdited);
 
         return response.data
 

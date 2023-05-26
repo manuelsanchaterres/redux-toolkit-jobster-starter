@@ -5,13 +5,7 @@ export const getJobsThunk = async (url, thunkAPI) => {
 
     try {
 
-        const response = await customFetch.get(url,{
-            
-            headers: {
-
-            Authorization: `Bearer ${thunkAPI.getState().user.user.token}` 
-
-        }})
+        const response = await customFetch.get(url)
 
         return response.data
 
@@ -31,3 +25,4 @@ export const getJobsThunk = async (url, thunkAPI) => {
     }
 
 }
+

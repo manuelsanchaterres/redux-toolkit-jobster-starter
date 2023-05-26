@@ -2,8 +2,9 @@ import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { createJobThunk, deleteJobThunk, editJobThunk } from "./jobThunk";
 import { addJobtoLocalStorage } from "../../utils/localStorage/jobLocalStorage";
-import { getJobsFromLocalStorage } from "../../utils/localStorage/jobsLocalStorage";
 import { getUserFromLocalStorage } from "../../utils/localStorage/userLocalStorage";
+import { redirectUser } from "../../utils/functions";
+
 
 const initialState = {
 
@@ -95,7 +96,6 @@ const jobSlice = createSlice({
             const {allJobsArray} = state
             const {job} = payload
 
-            console.log(job);
             toast.success(`Job ${job.position} Successfully Added`)
 
             const newAllJobsArray = [...allJobsArray, job]
@@ -131,7 +131,7 @@ const jobSlice = createSlice({
         })
         .addCase(editJob.fulfilled, (state, {payload}) =>  {
 
-            const {allJobsArray} = state
+            const {allJobsArray} = state 
             const {updatedJob} = payload
 
 
@@ -144,7 +144,7 @@ const jobSlice = createSlice({
 
             setTimeout(()=> {
 
-                window.location.replace("/all-jobs");
+                redirectUser('/all-jobs')
 
             }, 6500)
             return {...state, isLoading: false, allJobsArray: newAllJobsArray }

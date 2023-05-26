@@ -1,6 +1,7 @@
 import customFetch from '../../utils/axios';
 
 import { logoutUser } from './userSlice';
+import { authHeader } from '../../utils/functions';
 
 
 export const registerUserThunk = async (url,user, thunkAPI) => {
@@ -44,8 +45,7 @@ export const updateUserThunk = async (url,user, thunkAPI) => {
     try {
 
 
-        // const response = await customFetch.patch('/auth/updateUser', user, {headers: {Authorization: `Bearer ${token}`}})
-        const response = await customFetch.patch(url, user, {headers: {Authorization: `Bearer ${thunkAPI.getState().user.user.token} `}})
+        const response = await customFetch.patch(url, user, authHeader(thunkAPI))
 
         return response.data
         
