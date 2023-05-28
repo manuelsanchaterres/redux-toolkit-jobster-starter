@@ -14,7 +14,6 @@ const Job = ({_id, position, company, jobLocation, jobType, createdAt, status}) 
 
   const date = dayjs(createdAt).format('MMM D, YYYY')
 
-
   return (
 
     <Wrapper>

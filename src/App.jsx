@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 
 import {AddJob, AllJobs, Profile, SharedLayout, Stats} from './pages/dashboard'
+
 function App() {
 
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route index element = {<Stats />} />
           <Route path='all-jobs' element = {<AllJobs />} />
           <Route path='add-job' element = {<AddJob />} />
+
           <Route path='profile' element = {<Profile />} />
 
 

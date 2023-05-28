@@ -25,6 +25,7 @@ const initialState = {
 export const createJob = createAsyncThunk('job/createJob',
 
     (job, thunkAPI) => {
+
     return createJobThunk('/jobs', job, thunkAPI)
 
 })
@@ -40,10 +41,9 @@ export const deleteJob = createAsyncThunk('job/deleteJob',
 export const editJob = createAsyncThunk('job/editJob',
 
     (jobInfo, thunkAPI) => {
-        
-        const {jobId,jobEdited} = jobInfo
+        const {editJobId,data} = jobInfo
 
-    return editJobThunk(`/jobs/${jobId}`,jobEdited, thunkAPI)
+    return editJobThunk(`/jobs/${editJobId}`,data, thunkAPI)
 
 })
 
@@ -62,17 +62,17 @@ const jobSlice = createSlice({
 
         },
 
-        clearValues: (state) => {
+        // clearValues: (state) => {
 
-            if (state.isEditing) {
+        //     if (state.isEditing) {
 
-                return {...initialState, jobLocation: getUserFromLocalStorage()?.location, isEditing:true }    
+        //         return {...initialState, jobLocation: getUserFromLocalStorage()?.location, isEditing:true }    
 
-            }
+        //     }
 
-            return {...initialState, jobLocation: getUserFromLocalStorage()?.location }    
+        //     return {...initialState, jobLocation: getUserFromLocalStorage()?.location }    
 
-        },
+        // },
 
         setEditJob: (state, {payload}) => {
 
@@ -83,7 +83,7 @@ const jobSlice = createSlice({
 
     },
 
-    extraReducers: (builder) => {
+    extraReducers: (builder, thunkAPI) => {
 
         builder
         .addCase(createJob.pending, (state) =>  {
@@ -102,6 +102,7 @@ const jobSlice = createSlice({
 
             addJobtoLocalStorage(newAllJobsArray)
 
+            
             return {...state, isLoading: false, editJobId: job._id, allJobsArray: newAllJobsArray }
 
 

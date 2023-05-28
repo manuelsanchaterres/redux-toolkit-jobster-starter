@@ -1,10 +1,16 @@
 import axios from "axios";
 import { getUserFromLocalStorage } from "./localStorage/userLocalStorage";
 
-const customFetch = axios.create({
+export const customFetch = axios.create({
 
     baseURL: 'https://jobify-prod.herokuapp.com/api/v1/toolkit'
 })
+
+export const customFetchLoginRegisterUser = axios.create({
+
+    baseURL: 'https://jobify-prod.herokuapp.com/api/v1/toolkit'
+})
+
 
 customFetch.interceptors.request.use(
     

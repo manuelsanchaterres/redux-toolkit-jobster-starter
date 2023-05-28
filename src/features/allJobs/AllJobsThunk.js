@@ -1,4 +1,4 @@
-import customFetch from '../../utils/axios';
+import {customFetch} from '../../utils/axios';
 import { logoutUser} from '../user/userSlice';
 
 export const getJobsThunk = async (url, thunkAPI) => {

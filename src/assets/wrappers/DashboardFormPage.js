@@ -45,6 +45,16 @@ const Wrapper = styled.section`
   .clear-btn:hover {
     background: var(--black);
   }
+
+  .errorMsg {
+    max-width: 350px;
+    color: #f21e08;
+    padding: 2px 0;
+    margin-top: 2px;
+    font-size: 14px;
+    font-weight: 300;
+  }
+
   @media (min-width: 992px) {
     .form-center {
       grid-template-columns: 1fr 1fr;

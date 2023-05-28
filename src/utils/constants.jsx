@@ -58,11 +58,16 @@ export const formRowsProfilePage = [
 ]
 
 export const formRowsAddJobPage = [
+  
   {
     id: 1,
     name: 'position',
     type: 'text',
     labelText: "position",
+    required: true,
+
+    validate: {},
+
   },
 
   {
@@ -70,6 +75,9 @@ export const formRowsAddJobPage = [
     name: 'company',
     type: 'text',
     labelText: "company",
+    required: true,
+
+    validate: {},
 
   },
   {
@@ -77,30 +85,58 @@ export const formRowsAddJobPage = [
     name: 'jobLocation',
     type: 'text',
     labelText: "job location",
+    required: true,
+    validate: {
+      // checkLength: (value) => value.length >= 6,
+      // matchPattern: (value) =>
+      // /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)(?=.*[!@#$*])/.test(
+      //     value
+      // )
+    }
   },
 
   {
     id: 4,
     name: 'status',
     type: 'select',
-    options: ['interview', 'declined', 'pending'],
+    options: [
+      
+      {value:'interview', label: 'interview'}, 
+      {value:'declined', label: 'declined'}, 
+      {value:'pending', label: 'pending'}, 
+    ],
+
     defaultOption: 'pending',
     labelText: "status",
+    required: true,
+    validate: {},
+
   },
 
   {
     id: 5,
     name: 'jobType',
     type: 'select',
-    options: ['full-time', 'part-time', 'remote', 'internship'],
+    options: [
+      
+      {value:'full-time', label: 'full time'}, 
+      {value:'part-time', label: 'part-time'}, 
+      {value:'remote', label: 'remote'}, 
+      {value:'internship', label: 'internship'}
+    ],
+
     defaultOption: 'full-time',
     labelText: "job type",
+    required: true,
+    validate: {},
+
   },
 
 
 
   
 ]
+
 
 export const formRowsAllJobsPage = [
   {

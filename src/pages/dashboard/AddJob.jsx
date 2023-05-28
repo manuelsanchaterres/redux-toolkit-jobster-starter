@@ -4,7 +4,8 @@ import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { formRowsAddJobPage } from '../../utils/constants';
 import { checkEmpty } from '../../utils/functions';
-import { createJob, handleChange, clearValues, setEditJob, editJob} from '../../features/job/jobSlice';
+import { createJob,editJob} from '../../features/job/jobSlice';
+import { useForm} from "react-hook-form";
 
 const AddJob = () => {
 
@@ -12,34 +13,61 @@ const AddJob = () => {
   const {jobs} = useSelector((store) => store.allJobs)
   const job = useSelector((store) => store.job)
   const userLocation = useSelector((store) => store.user.user.location)
+  
+  const {
+    reset,
+    control,
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
 
   const dispatch = useDispatch()
 
-  const [isEmpty, setIsEmpty] = useState({})
+  const onSubmit = (data) => {
 
-  let refs = []
+    
+    if (isEditing) {
 
-  const handleInput = (e) => {
+      dispatch(editJob({editJobId, data}))
 
-    const {name, value} = e.target
-    dispatch(handleChange({name, value}))
-
-  }
-
-  const handleSubmit = (e) => {
-
-    e.preventDefault()
+      if (editJob.fulfilled) {
+  
+        reset({position: "", company: "", jobLocation : userLocation})
+  
+      }
 
 
-    const {position, company, jobLocation, jobType, status} = job
+    } else {
 
-    if (!checkEmpty(job,formRowsAddJobPage,setIsEmpty)) {
+      dispatch(createJob(data))
 
-      dispatch(createJob({position, company, jobLocation, status, jobType }))
+      if (createJob.fulfilled) {
+  
+        reset({position: "", company: "", jobLocation : userLocation})
+  
+      }
+  
 
     }
 
-  }
+  };
+
+
+  // const handleSubmit = (e) => {
+
+  //   e.preventDefault()
+
+
+  //   const {position, company, jobLocation, jobType, status} = job
+
+  //   if (!checkEmpty(job,formRowsAddJobPage,setIsEmpty)) {
+
+  //     dispatch(createJob({position, company, jobLocation, status, jobType }))
+
+  //   }
+
+  // }
 
   const handleEdit = (e) => {
 
@@ -62,7 +90,7 @@ const AddJob = () => {
 
       if (isEditing) {
     
-        dispatch(handleChange({name : "jobLocation", value: userLocation}))
+        reset({position, company, jobLocation})
 
       }
 
@@ -73,30 +101,98 @@ const AddJob = () => {
 
     <Wrapper>
 
-      <form  className="form" onSubmit={isEditing ? handleEdit : handleSubmit }>
+      <form  className="form" onSubmit={handleSubmit(onSubmit)}>
 
 
         <h3>{isEditing ? 'edit job' : 'add job'}</h3>
 
         <div className="form-center">
 
-          {formRowsAddJobPage.map((formRowAddJobPage, index) => {
+          {formRowsAddJobPage.map((item) => {
 
-            const {name} = formRowAddJobPage
+            const {id, name, type, labelText, required, validate, options} = item
 
-            refs.push(name)
+            // console.log(validate);
 
-            return <FormRow
-            
-            refName={`${refs[index]}Ref`}
+            if (type === 'select') {
 
-            key={formRowAddJobPage.id} formRow = {formRowAddJobPage} values={job} handleChange={handleInput} isEmptyField={isEmpty[`${name}`]}/>
+              return (
+              
+                <div key={id} className="form-row">
+
+                  <label className="form-label">{labelText}</label>
+
+                  <select className="form-input" 
+                  
+                    {...register(name, {
+                      required,
+                      validate
+                    })}
+
+                  >
+
+                    {options.map((option) => (
+
+                      <option key={option.value} value={option.value}>
+
+                        {option.label}
+
+                      </option>
+
+                    ))}
+
+                  </select>              
+
+                </div>
+
+              )
+
+            }
+            else {
+
+              return (
+              
+                <div key={id} className="form-row">
+
+                  <label className="form-label">{labelText}</label>
+
+                  <input 
+                    type={type}
+                    name={name}
+                    className="form-input"
+                    {...register(name, {
+                      required,
+                      validate
+                    })}
+                  />
+
+                  {errors[`${name}`]?.type === "required" && (
+                    <p className="errorMsg">{labelText} is required</p>
+                  )}
+                  {errors[`${name}`]?.type === "checkLength" && (
+
+                    <p className="errorMsg">{labelText} must be be at least 6 characters long</p>
+
+                  )}
+
+                  {errors[`${name}`]?.type === "matchPattern" && (
+
+                  <p className="errorMsg">{labelText} does not match pattern</p>
+
+                  )}
+
+
+                </div>
+
+              )
+
+            }
 
           })}
 
           <div className="btn-container">
 
-            <button className="btn btn-block clear-btn" type='button' onClick={() => dispatch(clearValues())}>clear</button>
+            <button className="btn btn-block clear-btn" type='button' onClick={() => reset({position: "", company: "", jobLocation : userLocation})}>clear</button>
 
             <button className="btn btn-block submit-btn" type='submit' disabled={isLoading}>{isLoading ? "please wait...":(isEditing ? "confirm edit": "submit")}</button>
 

@@ -1,8 +1,9 @@
-import customFetch from '../../utils/axios';
-import { authHeader } from '../../utils/functions';
+import {customFetch} from '../../utils/axios';
+// import { authHeader } from '../../utils/functions';
 import { hideLoading, showLoading, getJobs } from '../allJobs/AllJobsSlice';
 import { logoutUser} from '../user/userSlice';
 import { clearValues } from './jobSlice';
+import { useForm } from "react-hook-form";
 
 export const createJobThunk = async (url,job, thunkAPI) => {
 
@@ -10,7 +11,7 @@ export const createJobThunk = async (url,job, thunkAPI) => {
 
         const response = await customFetch.post(url, job)
         
-        thunkAPI.dispatch(clearValues())
+        // thunkAPI.dispatch(clearValues())
 
         return response.data
 
@@ -65,11 +66,12 @@ export const deleteJobThunk = async (url,thunkAPI) => {
 }
 
 export const editJobThunk = async (url,jobEdited, thunkAPI) => {
-
-
+    
     try {
 
         const response = await customFetch.patch(url,jobEdited);
+
+        // thunkAPI.dispatch(clearValues())
 
         return response.data
 

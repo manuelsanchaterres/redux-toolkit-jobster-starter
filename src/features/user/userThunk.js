@@ -1,4 +1,4 @@
-import customFetch from '../../utils/axios';
+import {customFetch, customFetchLoginRegisterUser} from '../../utils/axios';
 
 import { logoutUser } from './userSlice';
 import { authHeader } from '../../utils/functions';
@@ -8,7 +8,7 @@ export const registerUserThunk = async (url,user, thunkAPI) => {
 
     try {
 
-        const response = await customFetch.post(url, user)
+        const response = await customFetchLoginRegisterUser.post(url, user)
         return response.data
 
     } catch (error) {
@@ -25,7 +25,7 @@ export const loginUserThunk = async (url,user, thunkAPI) => {
 
     try {
 
-        const response = await customFetch.post(url, user)
+        const response = await customFetchLoginRegisterUser.post(url, user)
 
         return response.data
         
