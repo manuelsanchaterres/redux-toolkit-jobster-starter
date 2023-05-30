@@ -1,24 +1,29 @@
 import { useEffect } from "react"
-import { getJobs } from "../features/allJobs/AllJobsSlice"
+import { getJobs, handleJobFilterSort } from "../features/allJobs/AllJobsSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { getJobsFromLocalStorage } from "../utils/localStorage/jobsLocalStorage"
 import Job from "./Job"
 import Wrapper from '../assets/wrappers/JobsContainer';
 import Loading from "./Loading"
+import PageBtnContainer from "./PageBtnContainer"
+
+// import {store} from '../store'
 
 const JobsContainer = () => {
 
   const dispatch = useDispatch()
+  const {isLoading, totalJobs, numOfPages, jobs, page, filteredJobs} = useSelector((store) => store.allJobs)
 
   useEffect(() =>{
-    
+  
     dispatch(getJobs())
-
+    
   },[])
 
+  
 
-  const jobs = useSelector((store) => store.allJobs.jobs)
-  const {isLoading, totalJobs} = useSelector((store) => store.allJobs)
+    
+
 
   if (isLoading) {
 
@@ -30,7 +35,7 @@ const JobsContainer = () => {
   }
 
 
-  if (jobs.length === 0) {
+  if (filteredJobs.length === 0) {
 
     return (
 
@@ -49,16 +54,19 @@ const JobsContainer = () => {
 
     <Wrapper>
 
-      <h5>{`${jobs.length} jobs info`}</h5>
+      <h5>{totalJobs} job{jobs.length > 1 && 's'} found</h5>
+      
       <div className="jobs">
 
-        {jobs.map((job) => {
+        {filteredJobs.map((job) => {
 
           return <Job key={job._id} {...job} />
 
 
         })}
       </div>
+
+      {numOfPages > 1 && <PageBtnContainer />}
 
 
     </Wrapper>

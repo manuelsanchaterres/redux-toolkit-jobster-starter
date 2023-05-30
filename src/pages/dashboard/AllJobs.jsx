@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import { JobsContainer, SearchContainer } from '../../components';
 import { setEditJob } from "../../features/job/jobSlice"
-import { useDispatch} from "react-redux"
+import { useDispatch, useSelector} from "react-redux"
 
 const AllJobs = () => {
 
   const dispatch = useDispatch()
-
   // useEffect to restore jobSlice isEditing value to false every time the page mounts
   
   useEffect(() =>{
@@ -14,7 +13,6 @@ const AllJobs = () => {
     dispatch(setEditJob({isEditing: false}))
 
   },[])
-
 
   return (
     <>

@@ -1,16 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FormRow} from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { formRowsAllJobsPage } from '../utils/constants';
 import { checkEmpty } from '../utils/functions';
-import {handleChange, clearValues } from '../features/allJobs/AllJobsSlice';
+import {handleChange, clearValues, handleJobFilterSort} from '../features/allJobs/AllJobsSlice';
 
 const SearchContainer = () => {
 
  const filterState = useSelector((store) => store.allJobs)
  const {search, searchStatus, searchType, sort} = filterState
 
+ const {isLoading} = useSelector((store) => store.allJobs)
   const dispatch = useDispatch()
 
   const [isEmpty, setIsEmpty] = useState({})
@@ -23,32 +24,40 @@ const SearchContainer = () => {
 
     dispatch(handleChange({name, value}))
 
+    dispatch(handleJobFilterSort())
+
+
   }
 
-  const handleSubmit = (e) => {
 
-    e.preventDefault()
+  // const handleSubmit = (e) => {
 
-    const {position, company, jobLocation, jobType, status} = jobData
+  //   e.preventDefault()
 
-    if (!checkEmpty(jobData,formRowsAllJobsPage,setIsEmpty)) {
+  //   const {position, company, jobLocation, jobType, status} = jobData
 
-      dispatch(createJob({position, company, jobLocation, status, jobType }))
+  //   if (!checkEmpty(jobData,formRowsAllJobsPage,setIsEmpty)) {
 
-    }
+  //     dispatch(createJob({position, company, jobLocation, status, jobType }))
+
+  //   }
 
     
 
-  }
+  // }
 
   return (
 
     <Wrapper>
 
-      <form  className="form" onSubmit={handleSubmit}>
+      <form  className="form" 
+      
+      // onSubmit={handleSubmit}
+      
+      >
 
 
-        <h3>all jobs</h3>
+        <h4>search form</h4>
 
         <div className="form-center">
 
@@ -68,7 +77,7 @@ const SearchContainer = () => {
 
           <div className="btn-container">
 
-            <button className="btn btn-block clear-btn" type='button' onClick={() => dispatch(clearValues())}>clear filters</button>
+            <button className="btn btn-block clear-btn" type='button' onClick={() => dispatch(clearValues())} disabled={isLoading}>clear filters</button>
 
           </div>
 

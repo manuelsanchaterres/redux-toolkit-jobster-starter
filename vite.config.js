@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
 
   optimizeDeps: {
-    include: ['react', 'react-dom','@reduxjs/toolkit', 'react-icons'],
+    include: ['react', 'react-dom','@reduxjs/toolkit', 'react-icons', 'recharts'],
   },
 
   server: {

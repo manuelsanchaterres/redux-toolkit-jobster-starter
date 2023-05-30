@@ -6,16 +6,16 @@ import '../src/assets/css/index.css'
 import { store } from './store.js'
 import { Provider } from 'react-redux'
 
-// console.log(normalizecss);
 ReactDOM.createRoot(document.getElementById('root')).render(
+  
   // <React.StrictMode>
 
-  <Provider store={store}>
+    <Provider store={store}>
 
 
-    <App />
+      <App />
 
-  </Provider>
+    </Provider>
   
-  // </React.StrictMode>,
+  // </React.StrictMode>
 )

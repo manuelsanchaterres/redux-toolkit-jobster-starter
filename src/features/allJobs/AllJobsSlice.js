@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { getJobsThunk } from './AllJobsThunk';
+import { getJobsThunk, getJobsStatsThunk } from './AllJobsThunk';
 import { addJobstoLocalStorage, getJobsFromLocalStorage } from '../../utils/localStorage/jobsLocalStorage';
 
 const initialFiltersState = {
@@ -8,12 +8,13 @@ const initialFiltersState = {
   searchStatus: 'all',
   searchType: 'all',
   sort: 'latest',
-  sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
+  // sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
 };
 
 const initialState = {
   isLoading: false,
   jobs: [],
+  filteredJobs: [],
   totalJobs: 0,
   numOfPages: 1,
   page: 1,
@@ -26,6 +27,12 @@ export const getJobs = createAsyncThunk('allJobs/getJobs',
 
     (_,thunkAPI) => {
     return getJobsThunk('/jobs',thunkAPI)
+
+})
+export const getJobsStats = createAsyncThunk('allJobs/getJobsStats',
+
+    (_,thunkAPI) => {
+    return getJobsStatsThunk('/jobs/stats',thunkAPI)
 
 })
 
@@ -43,12 +50,9 @@ const AllJobsSlice = createSlice({
 
       clearValues: (state) => {
 
-          return {
+        return {
           ...state, 
-          search: '',
-          searchStatus: 'all',
-          searchType: 'all',
-          sort: 'latest',
+          ... initialState
         }    
 
       },
@@ -64,6 +68,65 @@ const AllJobsSlice = createSlice({
         return {...state, isLoading: false}
 
       },
+      handleJobFilterSort: (state) => {
+
+        const {search, searchStatus, searchType, sort, jobs} = state
+
+        let filteredJobs = [...jobs]
+        
+        // if (search) {
+
+        //   filteredJobs = filteredJobs.filter((job) => {
+
+        //     return  job.position.toLowerCase().includes(search)
+  
+        //   })
+
+
+        // }
+
+        // if (searchStatus !== 'all') {
+
+        //   filteredJobs = filteredJobs.filter((job) => {
+
+        //     return  job.status.toLowerCase().includes(searchStatus)
+  
+        //   })
+          
+        // }
+
+        // if (searchType !== 'all') {
+
+        //   filteredJobs = filteredJobs.filter((job) => {
+
+        //     return  job.jobType.toLowerCase().includes(searchType)
+  
+        //   })
+          
+        // }
+
+        if (sort) {
+
+          const {filteredJobs} = state
+
+          let sortedJobs = [...filteredJobs]
+
+          if (sort === 'latest') {
+
+            sortedJobs = sortedJobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+          }
+
+  
+          return {...state, filteredJobs: sortedJobs}
+
+        }
+
+        console.log(filteredJobs);
+        return {...state, filteredJobs }
+
+
+      },
 
 
 
@@ -71,34 +134,54 @@ const AllJobsSlice = createSlice({
 
     extraReducers: (builder) => {
 
-        builder
-        .addCase(getJobs.pending, (state) =>  {
+      builder
+      .addCase(getJobs.pending, (state) =>  {
 
-            return {...state, isLoading: true}
+          return {...state, isLoading: true}
 
-        })
-        .addCase(getJobs.fulfilled, (state, {payload}) =>  {
+      })
+      .addCase(getJobs.fulfilled, (state, {payload}) =>  {
 
-          const {jobs, totalJobs, numOfPages} = payload
-            
-          addJobstoLocalStorage(jobs)
+        const {jobs, totalJobs, numOfPages} = payload
+          
+        addJobstoLocalStorage(jobs)
+        return {...state, jobs, filteredJobs: jobs, totalJobs, numOfPages, isLoading: false}
 
-          return {...state, jobs, totalJobs, numOfPages, isLoading: false}
+      })
+      .addCase(getJobs.rejected, (state, {payload}) =>  {
 
+        toast.error(payload)
 
-        })
-        .addCase(getJobs.rejected, (state, {payload}) =>  {
-
-          toast.error(payload)
-
-          return {...state, jobs: getJobsFromLocalStorage(), isLoading: false}
+        return {...state, jobs: getJobsFromLocalStorage(), isLoading: false}
 
 
-        })
+      })
+      .addCase(getJobsStats.pending, (state) =>  {
+
+        return {...state, isLoading: true}
+
+      })
+      .addCase(getJobsStats.fulfilled, (state, {payload}) =>  {
+
+        const {defaultStats, monthlyApplications} = payload
+          
+        return {...state, stats : defaultStats, monthlyApplications, isLoading: false}
+
+
+      })
+      .addCase(getJobsStats.rejected, (state, {payload}) =>  {
+
+        toast.error(payload)
+
+        return {...state, isLoading: false}
+
+
+      })
+
 
     }
 
 })
 
-export const {handleChange, clearValues, showLoading, hideLoading} = AllJobsSlice.actions
+export const {handleChange, clearValues, showLoading, hideLoading, handleJobFilterSort} = AllJobsSlice.actions
 export default AllJobsSlice.reducer;
