@@ -64,7 +64,7 @@ const AllJobsSlice = createSlice({
 
       handleChange: (state, {payload: {name, value}}) => {
 
-        return {...state, [name]: value}
+        return {...state, [name]: value, page: 1}
 
       },
 
@@ -88,72 +88,13 @@ const AllJobsSlice = createSlice({
         return {...state, isLoading: false}
 
       },
-      handleJobFilterSort: (state) => {
-
-        const {search, searchStatus, searchType, sort, jobs} = state
-
-        let filteredJobs = [...jobs]
-        
-        // if (search) {
-
-        //   filteredJobs = filteredJobs.filter((job) => {
-
-        //     return  job.position.toLowerCase().includes(search)
-  
-        //   })
-
-
-        // }
-
-        // if (searchStatus !== 'all') {
-
-        //   filteredJobs = filteredJobs.filter((job) => {
-
-        //     return  job.status.toLowerCase().includes(searchStatus)
-  
-        //   })
-          
-        // }
-
-        // if (searchType !== 'all') {
-
-        //   filteredJobs = filteredJobs.filter((job) => {
-
-        //     return  job.jobType.toLowerCase().includes(searchType)
-  
-        //   })
-          
-        // }
-
-        if (sort) {
-
-          const {filteredJobs} = state
-
-          let sortedJobs = [...filteredJobs]
-
-          if (sort === 'latest') {
-
-            sortedJobs = sortedJobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-          }
-
-  
-          return {...state, filteredJobs: sortedJobs}
-
-        }
-
-        console.log(filteredJobs);
-        return {...state, filteredJobs }
-
-
-      },
 
       changePage: (state, {payload}) => {
 
         return {...state, page: payload}
-      }
+      },
 
-
+      clearAllJobsState: () => initialState
 
     },
 
@@ -208,5 +149,5 @@ const AllJobsSlice = createSlice({
 
 })
 
-export const {handleChange, clearValues, showLoading, hideLoading, handleJobFilterSort, changePage} = AllJobsSlice.actions
+export const {handleChange, clearValues, showLoading, hideLoading, changePage, clearAllJobsState} = AllJobsSlice.actions
 export default AllJobsSlice.reducer;

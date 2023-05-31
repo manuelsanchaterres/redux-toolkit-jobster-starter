@@ -2,9 +2,8 @@
 
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import customFetch from "../../utils/axios";
 import { addUsertoLocalStorage, getUserFromLocalStorage, removeUserFromLocalStorage } from "../../utils/localStorage/userLocalStorage";
-import { loginUserThunk, registerUserThunk, updateUserThunk } from "./userThunk";
+import { loginUserThunk, registerUserThunk, updateUserThunk, clearStoreThunk } from "./userThunk";
 // import cartItems from '../../cartItems'
 
 // - Root URL
@@ -46,7 +45,7 @@ export const updateUser = createAsyncThunk('user/updateUser',
 
 })
 
-
+export const clearStore = createAsyncThunk('user/clearStore', clearStoreThunk)
 
 const userSlice = createSlice({
 
@@ -156,6 +155,13 @@ const userSlice = createSlice({
 
 
         })
+        .addCase(clearStore.rejected, (state) => {
+
+            toast.error ('There was an error')
+
+            return {...state, isLoading: false}
+
+        })
 
 
     }
@@ -163,7 +169,6 @@ const userSlice = createSlice({
 
 })
 
-// console.log(userSlice);
 
 export const {toggleSidebar, logoutUser} = userSlice.actions
 

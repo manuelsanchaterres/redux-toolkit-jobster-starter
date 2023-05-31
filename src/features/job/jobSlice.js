@@ -62,17 +62,17 @@ const jobSlice = createSlice({
 
         },
 
-        // clearValues: (state) => {
+        clearValues: (state) => {
 
-        //     if (state.isEditing) {
+            if (state.isEditing) {
 
-        //         return {...initialState, jobLocation: getUserFromLocalStorage()?.location, isEditing:true }    
+                return {...initialState, jobLocation: getUserFromLocalStorage()?.location, isEditing:true }    
 
-        //     }
+            }
 
-        //     return {...initialState, jobLocation: getUserFromLocalStorage()?.location }    
+            return {...initialState, jobLocation: getUserFromLocalStorage()?.location }    
 
-        // },
+        },
 
         setEditJob: (state, {payload}) => {
 

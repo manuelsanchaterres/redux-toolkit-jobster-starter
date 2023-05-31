@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { getJobs, handleJobFilterSort } from "../features/allJobs/AllJobsSlice"
+import { getJobs} from "../features/allJobs/AllJobsSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { getJobsFromLocalStorage } from "../utils/localStorage/jobsLocalStorage"
 import Job from "./Job"

@@ -4,7 +4,7 @@ import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { formRowsAllJobsPage } from '../utils/constants';
 import { checkEmpty } from '../utils/functions';
-import {handleChange, clearValues, handleJobFilterSort} from '../features/allJobs/AllJobsSlice';
+import {handleChange, clearValues} from '../features/allJobs/AllJobsSlice';
 
 const SearchContainer = () => {
 
@@ -19,41 +19,21 @@ const SearchContainer = () => {
   let refs = []
 
   const handleInput = (e) => {
-
+    if (isLoading) return
     const {name, value} = e.target
 
     dispatch(handleChange({name, value}))
 
-    dispatch(handleJobFilterSort())
-
-
   }
 
 
-  // const handleSubmit = (e) => {
-
-  //   e.preventDefault()
-
-  //   const {position, company, jobLocation, jobType, status} = jobData
-
-  //   if (!checkEmpty(jobData,formRowsAllJobsPage,setIsEmpty)) {
-
-  //     dispatch(createJob({position, company, jobLocation, status, jobType }))
-
-  //   }
-
-    
-
-  // }
 
   return (
 
     <Wrapper>
 
       <form  className="form" 
-      
-      // onSubmit={handleSubmit}
-      
+            
       >
 
 

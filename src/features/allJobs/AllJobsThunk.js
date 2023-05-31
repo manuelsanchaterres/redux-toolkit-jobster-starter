@@ -1,6 +1,5 @@
-import {customFetch} from '../../utils/axios';
+import {checkForUnauthorizedResponse, customFetch} from '../../utils/axios';
 import { logoutUser} from '../user/userSlice';
-import { handleJobFilterSort } from './AllJobsSlice';
 
 export const getJobsThunk = async (url, thunkAPI) => {
 
@@ -15,13 +14,7 @@ export const getJobsThunk = async (url, thunkAPI) => {
     } catch (error) {
 
 
-        if (error.response.status === 401) {
-
-            thunkAPI.dispatch(logoutUser());
-
-            return thunkAPI.rejectWithValue('Unauthorized User! Logging Out...')
-
-        }
+        checkForUnauthorizedResponse(error, thunkAPI)
 
         return thunkAPI.rejectWithValue(error.response.data.msg)
 
