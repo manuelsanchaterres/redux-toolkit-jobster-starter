@@ -12,6 +12,7 @@
     "node": "concurrently \"node updatePagesIndex.cjs\" \"node updateComponentsIndex.cjs\" \"node updateDashboardPagesIndex.cjs\""
   },
   "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "concurrently": "^8.0.1",
@@ -20,7 +21,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.1",
-    "react-icons": "^4.8.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.11.1",
     "react-toastify": "^9.1.3",

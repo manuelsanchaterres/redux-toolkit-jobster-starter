@@ -23,12 +23,32 @@ const initialState = {
   ...initialFiltersState,
 };
 
+// export const getJobs = createAsyncThunk('allJobs/getJobs',
+
+//     (_,thunkAPI) => {
+//     return getJobsThunk('/jobs',thunkAPI)
+
+// })
+
 export const getJobs = createAsyncThunk('allJobs/getJobs',
 
     (_,thunkAPI) => {
-    return getJobsThunk('/jobs',thunkAPI)
 
+      const {page, search, searchStatus, searchType, sort} = thunkAPI.getState().allJobs
+
+      let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`
+
+      if (search) {
+
+        url = url + `&search=${search}`
+
+      }
+
+      return getJobsThunk(url,thunkAPI)
 })
+
+
+
 export const getJobsStats = createAsyncThunk('allJobs/getJobsStats',
 
     (_,thunkAPI) => {
@@ -128,6 +148,11 @@ const AllJobsSlice = createSlice({
 
       },
 
+      changePage: (state, {payload}) => {
+
+        return {...state, page: payload}
+      }
+
 
 
     },
@@ -183,5 +208,5 @@ const AllJobsSlice = createSlice({
 
 })
 
-export const {handleChange, clearValues, showLoading, hideLoading, handleJobFilterSort} = AllJobsSlice.actions
+export const {handleChange, clearValues, showLoading, hideLoading, handleJobFilterSort, changePage} = AllJobsSlice.actions
 export default AllJobsSlice.reducer;

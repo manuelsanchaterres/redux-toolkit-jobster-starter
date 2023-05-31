@@ -1,4 +1,4 @@
-import { FaLocationArrow, FaCalendarAlt, FaBriefcase} from 'react-icons/fa';
+import { FaLocationArrow, FaCalendarAlt, FaBriefcase} from '../assets/icons/react-icons';
 import { Link } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/Job';
 import { useDispatch,useSelector } from 'react-redux';

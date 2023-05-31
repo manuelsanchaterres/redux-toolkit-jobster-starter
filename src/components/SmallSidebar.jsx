@@ -1,6 +1,6 @@
 import Wrapper from '../assets/wrappers/SmallSidebar'
 import { useSelector, useDispatch } from 'react-redux';
-import {FaTimes} from 'react-icons/fa'
+import {FaTimes} from '../assets/icons/react-icons'
 import Logo from './Logo'
 import { toggleSidebar } from '../features/user/userSlice';
 import NavLinks from './NavLinks';
@@ -18,7 +18,11 @@ const SmallSidebar = () => {
 
       <div className="content">
 
-        <button className="close-btn" onClick={() => dispatch(toggleSidebar())}><FaTimes/></button>
+        <button className="close-btn" onClick={() => dispatch(toggleSidebar())}>
+          
+          <FaTimes/>
+          
+          </button>
 
         <header>
 

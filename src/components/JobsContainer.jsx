@@ -12,18 +12,13 @@ import PageBtnContainer from "./PageBtnContainer"
 const JobsContainer = () => {
 
   const dispatch = useDispatch()
-  const {isLoading, totalJobs, numOfPages, jobs, page, filteredJobs} = useSelector((store) => store.allJobs)
+  const {isLoading, totalJobs, numOfPages, jobs, filteredJobs, search, searchStatus, searchType, sort, page} = useSelector((store) => store.allJobs)
 
   useEffect(() =>{
   
     dispatch(getJobs())
     
-  },[])
-
-  
-
-    
-
+  },[search, searchStatus, searchType, sort, page])
 
   if (isLoading) {
 
@@ -54,8 +49,8 @@ const JobsContainer = () => {
 
     <Wrapper>
 
-      <h5>{totalJobs} job{jobs.length > 1 && 's'} found</h5>
-      
+      <h5>{totalJobs} job{totalJobs > 1 && 's'} found</h5>
+
       <div className="jobs">
 
         {filteredJobs.map((job) => {

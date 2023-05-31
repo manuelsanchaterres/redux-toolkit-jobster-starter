@@ -4,10 +4,12 @@ import { handleJobFilterSort } from './AllJobsSlice';
 
 export const getJobsThunk = async (url, thunkAPI) => {
 
+    // console.log(url);
     try {
 
         const response = await customFetch.get(url)
-        
+
+        // console.log(response.data);
         return response.data
 
     } catch (error) {

@@ -50,5 +50,23 @@ const Wrapper = styled.section`
     background: var(--primary-500);
     color: var(--white);
   }
+
+  .page-controls-btn {
+
+    display: flex;
+    gap: 0.5rem
+
+  }
+
+  @media (max-width: 992px) {
+
+    justify-content: center;
+
+    .btn-container {
+      display: none;
+    }
+  
+
+  }
 `
 export default Wrapper
