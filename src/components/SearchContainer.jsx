@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { FormRow} from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,18 +15,35 @@ const SearchContainer = () => {
   const dispatch = useDispatch()
 
   const [isEmpty, setIsEmpty] = useState({})
+  const [localSearch, setLocalSearch] = useState('')
 
   let refs = []
 
   const handleInput = (e) => {
-    if (isLoading) return
-    const {name, value} = e.target
 
+    const {name, value} = e.target
     dispatch(handleChange({name, value}))
 
   }
 
+  const debounce = () => {
 
+    let timeoutId;
+
+    return (e) => {
+
+      setLocalSearch(e.target.value);
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(()=> {
+
+        dispatch(handleChange({name: e.target.name, value: e.target.value}))
+
+      }, 1000)
+  
+    }
+  }
+
+  const optimizedDebounce = useMemo(() => debounce(), [])
 
   return (
 
@@ -51,13 +68,13 @@ const SearchContainer = () => {
             
             refName={`${refs[index]}Ref`}
 
-            key={formRowAllJobsPage.id} formRow = {formRowAllJobsPage} values={filterState} handleChange={handleInput} isEmptyField={isEmpty[`${name}`]}/>
+            key={formRowAllJobsPage.id} formRow = {formRowAllJobsPage} localSearch={localSearch}  optimizedDebounce= {optimizedDebounce} values={filterState} handleChange={handleInput} isEmptyField={isEmpty[`${name}`]}/>
 
           })}
 
           <div className="btn-container">
 
-            <button className="btn btn-block clear-btn" type='button' onClick={() => dispatch(clearValues())} disabled={isLoading}>clear filters</button>
+            <button className="btn btn-block clear-btn" type='button' onClick={() => [dispatch(clearValues()), setLocalSearch('')]} disabled={isLoading}>clear filters</button>
 
           </div>
 

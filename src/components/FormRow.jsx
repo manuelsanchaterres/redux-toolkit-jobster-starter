@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import Wrapper from "../assets/wrappers/FormRow"
 
-const FormRow = ({formRow, values, handleChange, refName, isEmptyField}) => {
+const FormRow = ({formRow, values, handleChange, refName, isEmptyField, localSearch, optimizedDebounce}) => {
 
   const {id, name, type, labelText} = formRow
 
   const [isSelectType, setIsSelectType] = useState(false)
+  const [isSearchType, setIsSearchType] = useState(false)
 
   refName = useRef()
 
@@ -15,6 +16,12 @@ const FormRow = ({formRow, values, handleChange, refName, isEmptyField}) => {
 
       setIsSelectType(true)
   
+    }
+
+    if (name === 'search') {
+
+      setIsSearchType(true)
+
     }
   
   },[type])
@@ -78,9 +85,9 @@ const FormRow = ({formRow, values, handleChange, refName, isEmptyField}) => {
         
         type={type} name={name} 
         
-        onChange={handleChange} 
+        onChange={isSearchType? optimizedDebounce: handleChange}
 
-        value={values[`${name}`]} 
+        value={isSearchType ? localSearch : values[`${name}`]} 
         
         className="form-input"/>
       

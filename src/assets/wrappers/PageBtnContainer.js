@@ -58,7 +58,7 @@ const Wrapper = styled.section`
 
   }
 
-  @media (max-width: 992px) {
+  @media (max-width: 768px) {
 
     justify-content: center;
 
