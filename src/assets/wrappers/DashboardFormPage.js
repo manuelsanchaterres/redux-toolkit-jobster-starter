@@ -39,12 +39,29 @@ const Wrapper = styled.section`
       height: 35px;
     }
   }
+
+  .btn-container-back-button {
+
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    .back-btn {
+      background: var(--red-dark);
+      max-width: 30%;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+    }
+  }
   .clear-btn {
     background: var(--grey-500);
   }
   .clear-btn:hover {
     background: var(--black);
   }
+
+
 
   .errorMsg {
     max-width: 350px;

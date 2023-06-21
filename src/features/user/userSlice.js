@@ -8,7 +8,7 @@ import { loginUserThunk, registerUserThunk, updateUserThunk, clearStoreThunk } f
 
 // - Root URL
 
-const url = 'https://jobify-prod.herokuapp.com/api/v1/toolkit'
+// const url = 'https://jobify-prod.herokuapp.com/api/v1/toolkit'
 
 const initialState = {
 
@@ -21,7 +21,7 @@ export const registerUser = createAsyncThunk('user/registerUser',
 
     async (user, thunkAPI) => {
     
-    return registerUserThunk('auth/register', user, thunkAPI)
+    return registerUserThunk('/auth/register', user, thunkAPI)
 
 })
 
@@ -110,8 +110,7 @@ const userSlice = createSlice({
 
             
             const {user} = payload
-
-
+            
             addUsertoLocalStorage(user)
             
             toast.success(`Wellcome back ${user.name}`)

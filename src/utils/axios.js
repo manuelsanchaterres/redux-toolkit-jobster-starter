@@ -2,16 +2,18 @@ import axios from "axios";
 import { getUserFromLocalStorage } from "./localStorage/userLocalStorage";
 import { clearStore } from '../features/user/userSlice';
 
-
-
 export const customFetch = axios.create({
 
-    baseURL: 'https://jobify-prod.herokuapp.com/api/v1/toolkit'
+    // baseURL: 'https://jobify-prod.herokuapp.com/api/v1/toolkit'
+    baseURL: import.meta.env.VITE_JOBSTER_API_ENDPOINT
+
 })
 
 export const customFetchLoginRegisterUser = axios.create({
 
-    baseURL: 'https://jobify-prod.herokuapp.com/api/v1/toolkit'
+    // baseURL: 'https://jobify-prod.herokuapp.com/api/v1/toolkit'
+    baseURL: import.meta.env.VITE_JOBSTER_API_ENDPOINT
+
 })
 
 

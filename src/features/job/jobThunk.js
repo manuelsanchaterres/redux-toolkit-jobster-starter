@@ -11,8 +11,7 @@ export const createJobThunk = async (url,job, thunkAPI) => {
 
         const response = await customFetch.post(url, job)
         
-        // thunkAPI.dispatch(clearValues())
-
+        thunkAPI.dispatch(clearValues())
         return response.data
 
     } catch (error) {
@@ -55,8 +54,6 @@ export const editJobThunk = async (url,jobEdited, thunkAPI) => {
     try {
 
         const response = await customFetch.patch(url,jobEdited);
-
-        // thunkAPI.dispatch(clearValues())
 
         return response.data
 

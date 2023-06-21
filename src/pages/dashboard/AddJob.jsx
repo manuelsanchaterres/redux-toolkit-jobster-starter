@@ -6,6 +6,7 @@ import { formRowsAddJobPage } from '../../utils/constants';
 import { checkEmpty } from '../../utils/functions';
 import { createJob,editJob} from '../../features/job/jobSlice';
 import { useForm} from "react-hook-form";
+import { useNavigate, Link } from 'react-router-dom';
 
 const AddJob = () => {
 
@@ -13,7 +14,6 @@ const AddJob = () => {
   const {jobs} = useSelector((store) => store.allJobs)
   const job = useSelector((store) => store.job)
   const userLocation = useSelector((store) => store.user.user.location)
-  
   const {
     reset,
     control,
@@ -24,17 +24,21 @@ const AddJob = () => {
 
   const dispatch = useDispatch()
 
+  const navigate = useNavigate()
+
   const onSubmit = (data) => {
 
-    
     if (isEditing) {
 
       dispatch(editJob({editJobId, data}))
 
       if (editJob.fulfilled) {
-  
-        reset({position: "", company: "", jobLocation : userLocation})
-  
+
+        setTimeout(() => {
+          reset({position: "", company: "", jobLocation : userLocation})
+          navigate('/all-jobs')
+        }, 6500);
+
       }
 
 
@@ -45,7 +49,11 @@ const AddJob = () => {
       if (createJob.fulfilled) {
   
         reset({position: "", company: "", jobLocation : userLocation})
-  
+        
+        // setTimeout(() => {
+        //   navigate('/all-jobs')
+        // }, 6500);
+
       }
   
 
@@ -54,47 +62,38 @@ const AddJob = () => {
   };
 
 
-  // const handleSubmit = (e) => {
+  // const handleEdit = (e) => {
 
   //   e.preventDefault()
 
+  //   const jobEdited = {position, company, jobLocation, jobType, status}
 
-  //   const {position, company, jobLocation, jobType, status} = job
+  //   const jobId = job.editJobId
 
-  //   if (!checkEmpty(job,formRowsAddJobPage,setIsEmpty)) {
+  //   checkEmpty(job, formRowsAddJobPage,setIsEmpty)
 
-  //     dispatch(createJob({position, company, jobLocation, status, jobType }))
-
-  //   }
+  //   dispatch(editJob({jobId, jobEdited}))
 
   // }
 
-  const handleEdit = (e) => {
 
-    e.preventDefault()
-
-    const jobEdited = {position, company, jobLocation, jobType, status}
-
-    const jobId = job.editJobId
-
-    checkEmpty(job, formRowsAddJobPage,setIsEmpty)
-
-    dispatch(editJob({jobId, jobEdited}))
-
-  }
+  // this effect update default job location add job page value equal to user location
 
 
-    // this effect update default job location add job page value equal to user location
+  useEffect(() => {
+
+    if (isEditing === true) {
+
+      reset({position: job.position, company: job.company, jobLocation: job.jobLocation, status: job.status, jobType: job.jobType})
   
-    useEffect(()=> {
+    } else {
+  
+      reset({position: "", company: "", jobLocation: userLocation, status: 'pending', jobType: 'full-time'})
+  
+    }
+  
+  }, [isEditing])
 
-      if (isEditing) {
-    
-        reset({position, company, jobLocation})
-
-      }
-
-    },[isEditing])
     
 
   return (
@@ -195,13 +194,15 @@ const AddJob = () => {
             <button className="btn btn-block clear-btn" type='button' onClick={() => reset({position: "", company: "", jobLocation : userLocation})}>clear</button>
 
             <button className="btn btn-block submit-btn" type='submit' disabled={isLoading}>{isLoading ? "please wait...":(isEditing ? "confirm edit": "submit")}</button>
-
           </div>
 
         </div>
 
 
       </form>
+
+      {!isEditing && <div className="btn-container-back-button"><Link to='/all-jobs' className='btn btn-block back-btn'>Back all jobs</Link></div>}
+
 
     </Wrapper>
   )

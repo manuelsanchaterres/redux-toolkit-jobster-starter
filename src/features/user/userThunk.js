@@ -9,6 +9,7 @@ export const registerUserThunk = async (url,user, thunkAPI) => {
     try {
 
         const response = await customFetchLoginRegisterUser.post(url, user)
+
         return response.data
 
     } catch (error) {

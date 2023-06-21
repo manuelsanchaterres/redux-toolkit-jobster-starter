@@ -25,7 +25,8 @@ const initialState = {
 export const createJob = createAsyncThunk('job/createJob',
 
     (job, thunkAPI) => {
-
+        
+    // return createJobThunk('/jobs', job, thunkAPI)
     return createJobThunk('/jobs', job, thunkAPI)
 
 })
@@ -101,7 +102,6 @@ const jobSlice = createSlice({
             const newAllJobsArray = [...allJobsArray, job]
 
             addJobtoLocalStorage(newAllJobsArray)
-
             
             return {...state, isLoading: false, editJobId: job._id, allJobsArray: newAllJobsArray }
 
@@ -133,21 +133,15 @@ const jobSlice = createSlice({
         .addCase(editJob.fulfilled, (state, {payload}) =>  {
 
             const {allJobsArray} = state 
-            const {updatedJob} = payload
+            const {job} = payload
 
+            toast.success(`Job ${job.position} Successfully Edited`)
 
-            toast.success(`Job ${updatedJob.position} Successfully Edited`)
-
-            const newAllJobsArray = [...allJobsArray, updatedJob]
+            const newAllJobsArray = [...allJobsArray, job]
 
             
             addJobtoLocalStorage(newAllJobsArray)
 
-            setTimeout(()=> {
-
-                redirectUser('/all-jobs')
-
-            }, 6500)
             return {...state, isLoading: false, allJobsArray: newAllJobsArray }
 
 
