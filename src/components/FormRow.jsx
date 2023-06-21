@@ -3,7 +3,7 @@ import Wrapper from "../assets/wrappers/FormRow"
 
 const FormRow = ({formRow, values, handleChange, refName, isEmptyField, localSearch, optimizedDebounce}) => {
 
-  const {id, name, type, labelText} = formRow
+  const {id, name, type, labelText, defaultOption} = formRow
 
   const [isSelectType, setIsSelectType] = useState(false)
   const [isSearchType, setIsSearchType] = useState(false)
@@ -62,8 +62,8 @@ const FormRow = ({formRow, values, handleChange, refName, isEmptyField, localSea
         <select 
         
         ref= {refName}
-        value={values[`${name}`]}
-
+        // value={values[`${name}`]}
+        defaultValue={defaultOption}
         name={name} 
         
         onChange={handleChange}  

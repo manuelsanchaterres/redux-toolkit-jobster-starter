@@ -156,7 +156,7 @@ export const formRowsAllJobsPage = [
   },
   {
     id: 3,
-    name: 'searchType',
+    name: 'jobType',
     type: 'select',
     options: ['all','full-time', 'part-time', 'remote', 'internship', 'hybrid'],
     defaultOption: 'full-time',
@@ -165,12 +165,22 @@ export const formRowsAllJobsPage = [
 
   {
     id: 4,
-    name: 'sort',
+    name: 'limit',
     type: 'select',
     options: ['latest', 'oldest', 'a-z', 'z-a'],
-    defaultOption: 'pending',
+    defaultOption: 'latest',
     labelText: "sort by",
   },
+
+  {
+    id: 5,
+    name: 'limit',
+    type: 'select',
+    options: [5, 10, 25],
+    defaultOption: 10,
+    labelText: "results per page",
+  },
+
 
 
 

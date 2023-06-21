@@ -8,6 +8,7 @@ const initialFiltersState = {
   searchStatus: 'all',
   searchType: 'all',
   sort: 'latest',
+  limit: 10,
   // sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
 };
 
@@ -35,9 +36,9 @@ export const getJobs = createAsyncThunk('allJobs/getJobs',
     (_,thunkAPI) => {
 
       // const {page, search, searchStatus, searchType, sort} = thunkAPI.getState().allJobs
-      const {page, search, searchStatus, searchType, sort} = thunkAPI.getState().allJobs
+      const {page, search, searchStatus, searchType, sort,limit} = thunkAPI.getState().allJobs
 
-      let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`
+      let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}&limit=${limit}`
 
       if (search) {
 

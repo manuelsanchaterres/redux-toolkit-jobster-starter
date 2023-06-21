@@ -21,7 +21,12 @@ const SearchContainer = () => {
 
   const handleInput = (e) => {
 
-    const {name, value} = e.target
+    let {name, value} = e.target
+
+    if (name === 'limit') {
+
+      value = new Number(value)
+    }
     dispatch(handleChange({name, value}))
 
   }

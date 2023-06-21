@@ -12,13 +12,13 @@ import PageBtnContainer from "./PageBtnContainer"
 const JobsContainer = () => {
 
   const dispatch = useDispatch()
-  const {isLoading, totalJobs, numOfPages, jobs, filteredJobs, search, searchStatus, searchType, sort, page} = useSelector((store) => store.allJobs)
+  const {isLoading, totalJobs, numOfPages, jobs, filteredJobs, search, searchStatus, searchType, sort, page,limit} = useSelector((store) => store.allJobs)
 
   useEffect(() =>{
   
     dispatch(getJobs())
     
-  },[search, searchStatus, searchType, sort, page])
+  },[search, searchStatus, searchType, sort, page,limit])
 
   if (isLoading) {
 
