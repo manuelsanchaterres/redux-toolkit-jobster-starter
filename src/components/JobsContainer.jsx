@@ -49,7 +49,8 @@ const JobsContainer = () => {
 
     <Wrapper>
 
-      <h5>{totalJobs} job{totalJobs > 1 && 's'} found</h5>
+      {/* <h5>{totalJobs} job{totalJobs > 1 && 's'} found</h5> */}
+      <h5>{jobs.length} job{jobs.length > 1 && 's'} found</h5>
 
       <div className="jobs">
 
