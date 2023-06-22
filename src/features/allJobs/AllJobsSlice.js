@@ -9,6 +9,7 @@ const initialFiltersState = {
   searchType: 'all',
   sort: 'latest',
   limit: 10,
+  pageresults: {}
   // sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
 };
 
@@ -110,10 +111,10 @@ const AllJobsSlice = createSlice({
       })
       .addCase(getJobs.fulfilled, (state, {payload}) =>  {
 
-        const {jobs, totalJobs, numOfPages} = payload
+        const {jobs, totalJobs, numOfPages, pageresults} = payload
           
         addJobstoLocalStorage(jobs)
-        return {...state, jobs, filteredJobs: jobs, totalJobs, numOfPages, isLoading: false}
+        return {...state, jobs, filteredJobs: jobs, totalJobs, numOfPages, pageresults, isLoading: false}
 
       })
       .addCase(getJobs.rejected, (state, {payload}) =>  {

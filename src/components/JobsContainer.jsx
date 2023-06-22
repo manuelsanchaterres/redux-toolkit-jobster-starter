@@ -12,7 +12,7 @@ import PageBtnContainer from "./PageBtnContainer"
 const JobsContainer = () => {
 
   const dispatch = useDispatch()
-  const {isLoading, totalJobs, numOfPages, jobs, filteredJobs, search, searchStatus, searchType, sort, page,limit} = useSelector((store) => store.allJobs)
+  const {isLoading, totalJobs, numOfPages, jobs, filteredJobs, search, searchStatus, searchType, sort, page,limit, pageresults} = useSelector((store) => store.allJobs)
 
   useEffect(() =>{
   
@@ -50,7 +50,7 @@ const JobsContainer = () => {
     <Wrapper>
 
       {/* <h5>{totalJobs} job{totalJobs > 1 && 's'} found</h5> */}
-      <h5>{jobs.length} job{jobs.length > 1 && 's'} found</h5>
+      <h5>results {pageresults.firstActivePageResultNumber} - {pageresults.lastActivePageResultNumber} of <span style={{color: 'red'}}>{totalJobs}</span> job{totalJobs > 1 && 's'} found</h5>
 
       <div className="jobs">
 

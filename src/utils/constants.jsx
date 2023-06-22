@@ -151,15 +151,18 @@ export const formRowsAllJobsPage = [
     name: 'searchStatus',
     type: 'select',
     options: ['all','interview', 'declined', 'pending'],
-    defaultOption: 'pending',
+    defaultOption: 'all',
     labelText: "status",
   },
   {
     id: 3,
-    name: 'jobType',
+    name: 'searchType',
     type: 'select',
-    options: ['all','full-time', 'part-time', 'remote', 'internship', 'hybrid'],
-    defaultOption: 'full-time',
+    options: ['all','full-time', 'part-time', 'remote', 'internship'
+    // , 'hybrid'
+  
+    ],
+    defaultOption: 'all',
     labelText: "job type",
   },
 
@@ -176,7 +179,7 @@ export const formRowsAllJobsPage = [
     id: 5,
     name: 'limit',
     type: 'select',
-    options: [5, 10, 25],
+    options: [10, 20, 50],
     defaultOption: 10,
     labelText: "results per page",
   },

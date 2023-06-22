@@ -23,10 +23,10 @@ const SearchContainer = () => {
 
     let {name, value} = e.target
 
-    if (name === 'limit') {
+    // if (name === 'limit') {
 
-      value = new Number(value)
-    }
+    //   value = new Number(value)
+    // }
     dispatch(handleChange({name, value}))
 
   }
